@@ -5,9 +5,14 @@ import styles from "./Auth.module.css";
 // components
 import { Link } from "react-router-dom";
 import { validate } from "email-validator";
+import Message from "../../components/Message/Message";
 
 // Hooks
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// Redux
+import { register, reset } from "../../slices/authSlice";
 
 const Register = () => {
   const [name, setname] = useState("");
@@ -16,6 +21,10 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [errors, setErrors] = useState("");
+
+  const dispath = useDispatch();
+
+  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -42,6 +51,11 @@ const Register = () => {
       return;
     }
 
+    if (password.length < 6) {
+      setErrors("A senha deve ter no mínimo 6 caracteres.");
+      return;
+    }
+
     if (!confirmPassword) {
       setErrors("Por favor confirme sua senha.");
       return;
@@ -58,7 +72,14 @@ const Register = () => {
       password,
       confirmPassword,
     };
+
+    dispath(register(user));
   };
+
+  // Limpar todos estados de auth
+  useEffect(() => {
+    dispath(reset());
+  }, [dispath]);
 
   return (
     <div className={styles.register}>
@@ -91,9 +112,11 @@ const Register = () => {
           value={confirmPassword || ""}
           onChange={({ target }) => setConfirmPassword(target.value)}
         />
-        <input type="submit" value="Cadastrar" />
+        {!loading && <input type="submit" value="Cadastrar" />}
+        {loading && <input type="submit" value="aguarde..." disabled />}
       </form>
-      {errors && <p className="errors">{errors}</p>}
+      {errors && <Message message={errors} type="error" />}
+      {error && <Message message={error} type="error" />}
       <p>
         Já tem uma conta? <Link to="/login">Clique aqui</Link>
       </p>
