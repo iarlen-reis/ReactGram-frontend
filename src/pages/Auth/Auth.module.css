@@ -1,0 +1,45 @@
+.login,
+.register {
+    max-width: 35rem;
+
+    padding: 1.5rem 2rem;
+    margin: 2rem auto;
+
+    border: 1px solid #363636;
+    background: #000;
+}
+
+.login h2,
+.register h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+.subtitle {
+    font-weight: bold;
+    text-align: center;
+
+    margin-bottom: 2rem;
+
+    color: #999;
+}
+
+.login form,
+.register form {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    border-bottom: 1px solid #363636;
+}
+
+.login p,
+.register p {
+    text-align: center;
+}
+
+.login p a,
+.register p a {
+    font-weight: bold;
+    color: #0065f6;
+}
