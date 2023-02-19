@@ -11,7 +11,29 @@ import {
   BsFillCameraFill,
 } from "react-icons/bs";
 
+// Hooks
+import { useAuth } from "../../hooks/useAuth";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// Redux
+import { logout, reset } from "../../slices/authSlice";
+
 const Header = () => {
+  const { auth } = useAuth();
+  const { user } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+
+    navigate("/login");
+  };
+
   return (
     <aside className={styles.aside}>
       <nav className={styles.nav}>
@@ -21,17 +43,40 @@ const Header = () => {
           <input type="text" placeholder="Pesquisar" />
         </form>
         <ul className={styles.nav__links}>
-          <li>
-            <NavLink to="/">
-              <BsHouseDoorFill />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/login">Entrar</NavLink>
-          </li>
-          <li>
-            <NavLink to="/register">Cadastrar</NavLink>
-          </li>
+          {auth ? (
+            <>
+              <li>
+                <NavLink to="/">
+                  <BsHouseDoorFill />
+                </NavLink>
+              </li>
+              {user && (
+                <li>
+                  <NavLink to={`/users/${user._id}`}>
+                    <BsFillCameraFill />
+                  </NavLink>
+                </li>
+              )}
+              <li>
+                <NavLink to="/profile">
+                  <BsFillPersonFill />
+                </NavLink>
+              </li>
+
+              <li>
+                <span onClick={handleLogout}>Sair</span>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink to="/login">Entrar</NavLink>
+              </li>
+              <li>
+                <NavLink to="/register">Cadastrar</NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </aside>
