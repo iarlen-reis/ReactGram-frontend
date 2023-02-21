@@ -1,0 +1,46 @@
+.profile {
+    max-width: 30rem;
+    margin: 0 auto;
+}
+
+.profile__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 2rem;
+    
+
+    padding: 1rem;
+    border-bottom: 1px solid #363636;
+}
+
+.profile__header img {
+    width: 100px;
+    height: 100px;
+
+    border-radius: 50%;
+}
+
+.profile__description {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+.profile__description p::first-letter {
+    text-transform: uppercase;
+}
+
+.profile__description h2 {
+    text-transform: capitalize;
+}
+
+@media (max-width: 470px) {
+    .profile__header {
+        flex-wrap: wrap;
+        text-align: center;
+
+        row-gap: 0.6rem;
+
+    }
+}

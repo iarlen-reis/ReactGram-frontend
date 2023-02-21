@@ -60,36 +60,36 @@ export const authSlice = createSlice({
         state.error = false;
       })
       .addCase(register.fulfilled, (state, action) => {
-        (state.loading = false),
-          (state.success = true),
-          (state.error = null),
-          (state.user = action.payload);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
-        (state.loading = false),
-          (state.error = action.payload),
-          (state.user = null);
+        state.loading = false;
+        state.error = action.payload;
+        state.user = null;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        (state.loading = false),
-          (state.success = true),
-          (state.error = null),
-          (state.user = null);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = null;
       })
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = false;
       })
       .addCase(login.fulfilled, (state, action) => {
-        (state.loading = false),
-          (state.success = true),
-          (state.error = null),
-          (state.user = action.payload);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
-        (state.loading = false),
-          (state.error = action.payload),
-          (state.user = null);
+        state.loading = false;
+        state.error = action.payload;
+        state.user = null;
       });
   },
 });

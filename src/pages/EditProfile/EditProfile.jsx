@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Redux
-import { profile, resetMessage } from "../../slices/userSlice";
+import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
 
 // Components
 import Message from "../../components/Message/Message";
@@ -22,6 +22,7 @@ const EditProfile = () => {
   const [bio, setBio] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [previewImage, setpreviewImage] = useState("");
+  const [errors, setErrors] = useState("");
 
   // load user date
   useEffect(() => {
@@ -40,10 +41,45 @@ const EditProfile = () => {
     }
   }, [user]);
 
-  console.log(user);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // if (!name || name.length < 3) {
+    //   setErrors("O nome precisa ter no mínimo 3 caracteres.");
+    //   return;
+    // }
+
+    // if (password && password.length < 6) {
+    //   setErrors("A senha deve ter no mínimo 6 caracteres.");
+    //   return;
+    // }
+
+    // Gether user data from states
+    const userData = {
+      name,
+    };
+
+    if (profileImage) {
+      userData.profileImage = profileImage;
+    }
+
+    if (bio) {
+      userData.bio = bio;
+    }
+
+    if (password) {
+      userData.password = password;
+    }
+
+    // builder form data
+
+    const formData = new FormData();
+    Object.keys(userData).forEach((key) => formData.append(key, userData[key]));
+    dispacth(updateProfile(formData));
+
+    setTimeout(() => {
+      dispacth(resetMessage);
+    }, 2000);
   };
 
   const handleFile = (e) => {
@@ -108,8 +144,12 @@ const EditProfile = () => {
             onChange={({ target }) => setPassword(target.value)}
             value={password || ""}
           />
+          {error && <Message message={error} type="error" />}
+          {errors && <Message message={errors} type="error" />}
+          {message && <Message message={message} type="success" />}
         </label>
-        <input type="submit" value="Atualizar" />
+        {!loading && <input type="submit" value="Atualizar" />}
+        {loading && <input type="submit" value="aguarde..." disabled />}
       </form>
     </div>
   );

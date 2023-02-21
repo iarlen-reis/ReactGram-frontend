@@ -21,6 +21,33 @@ export const profile = createAsyncThunk(
   }
 );
 
+// update user details
+export const updateProfile = createAsyncThunk(
+  "user/update",
+  async (user, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await userService.updateProfile(user, token);
+
+    // check if errors
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
+// get user details
+export const getUserDetails = createAsyncThunk(
+  "user/get",
+  async (id, thunkAPI) => {
+    const data = await userService.getUserDetails(id);
+
+    return data;
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -36,10 +63,37 @@ export const userSlice = createSlice({
         state.error = false;
       })
       .addCase(profile.fulfilled, (state, action) => {
-        (state.loading = false),
-          (state.success = true),
-          (state.error = null),
-          (state.user = action.payload);
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
+        state.message = "Usuário atualizado com sucesso!";
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        console.log(state, action);
+        state.loading = false;
+        state.error = action.payload;
+        state.user = {};
+      })
+      .addCase(getUserDetails.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getUserDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
       });
   },
 });
