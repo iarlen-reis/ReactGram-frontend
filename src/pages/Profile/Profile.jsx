@@ -15,7 +15,11 @@ import { useParams } from "react-router-dom";
 
 // Redux
 import { getUserDetails } from "../../slices/userSlice";
-import { publishPhoto, resetMessage } from "../../slices/photoSlice";
+import {
+  publishPhoto,
+  resetMessage,
+  getUserPhotos,
+} from "../../slices/photoSlice";
 
 const Profile = () => {
   const { id } = useParams();
@@ -45,6 +49,7 @@ const Profile = () => {
   // load user data
   useEffect(() => {
     dispatch(getUserDetails(id));
+    dispatch(getUserPhotos(id));
   }, [dispatch, id]);
 
   const handleFile = (e) => {
@@ -100,7 +105,7 @@ const Profile = () => {
         <div className={styles.profile__description}>
           <h2>{user.name}</h2>
           <div className={styles.profile__publications}>
-            <span>Publicações: 0</span>
+            <span>Publicações: {photos.length}</span>
           </div>
           <p>{user.bio}</p>
         </div>
@@ -136,6 +141,36 @@ const Profile = () => {
                 <input type="submit" value="Criar publicação" />
               )}
             </form>
+            <div className={styles.user__photos}>
+              <h2>Fotos publicadas:</h2>
+              <div className={styles.photos__container}>
+                {photos &&
+                  photos.map((photo) => (
+                    <div className={styles.photo} key={photo._id}>
+                      {photo.image && (
+                        <img
+                          src={`${upload}/photos/${photo.image}`}
+                          alt={photo.title}
+                        />
+                      )}
+                      {id === userAuth._id ? (
+                        <div className={styles.actions}>
+                          <Link to={`/photos/${photo._id}`}>
+                            <BsFillEyeFill />
+                          </Link>
+                          <BsPencilFill />
+                          <BsXLg />
+                        </div>
+                      ) : (
+                        <Link className="btn" to={`/photos/${photo._id}`}>
+                          Ver
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                {photos.length === 0 && <p>Ainda não há fotos publicadas.</p>}
+              </div>
+            </div>
           </div>
         </>
       )}

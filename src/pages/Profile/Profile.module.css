@@ -78,8 +78,49 @@
     margin-bottom: 0.5rem;
 }
 
+.user__photos {
+    display: flex;
+    flex-direction: column;
 
+    row-gap: 1rem;
+    margin-top: 1rem;
+}
 
+.photos__container {
+    max-width: 100%;
+    display: flex;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+
+    flex-wrap: wrap;
+}
+
+.photo {
+    width: 32%;
+}
+
+.photo img {
+    width: 100%;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.actions svg {
+    cursor: pointer;
+}
+
+.edit__photo {
+    margin-bottom: 1.5rem;
+}
+
+.edit__photo__img {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
 
 
 @media (max-width: 585px) {
@@ -95,6 +136,6 @@
     .new__photo h3 {
         text-align: center;
     }
-
-    
 }
+
+

@@ -15,8 +15,24 @@ const publishPhoto = async (data, token) => {
   }
 };
 
+// get user photos
+const getUserPhotos = async (id, token) => {
+  const config = requestConfig("GET", null, token);
+
+  try {
+    const response = await fetch(api + "/photos/user/" + id, config)
+      .then((response) => response.json())
+      .catch((error) => error);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const photoService = {
   publishPhoto,
+  getUserPhotos,
 };
 
 export default photoService;
