@@ -10,6 +10,7 @@ import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
 
 // Components
 import Message from "../../components/Message/Message";
+import Loading from "../../components/Loading/Loading";
 
 const EditProfile = () => {
   const dispacth = useDispatch();
