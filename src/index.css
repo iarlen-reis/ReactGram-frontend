@@ -112,3 +112,11 @@ input:disabled {
   margin-bottom: 0.8rem;
   color: crimson;
 }
+
+.edit__photo h3 {
+  margin: 1.5rem 0;
+}
+
+.edit__photo img {
+  max-width: 100%;
+}
