@@ -5,8 +5,6 @@
 
     margin: 0 auto;
     border-radius: 4px;
-    background: #000;
-    border: 1px solid #000;
 }
 
 .home .photo__item h2 {
@@ -14,13 +12,19 @@
 }
 
 .info__container {
+    width: 100%;
+
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    row-gap: 1.6rem;
 
-    column-gap: 0.6rem;
+    padding: 1rem 0;
+}
 
-    padding: 0.8rem 1rem;
+.info__container h2 {
+    font-style: italic;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .photo__item h2,
@@ -30,11 +34,12 @@
 
 .photo__author a {
     transition: 0.5s;
+    font-weight: bold;
 
 }
 
 .photo__author a:hover {
-    color: #AAA;
+    color: rgb(199, 192, 192);
 } 
 
 .photo__item img {
