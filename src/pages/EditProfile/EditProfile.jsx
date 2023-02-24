@@ -11,9 +11,13 @@ import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
 // Components
 import Message from "../../components/Message/Message";
 import Loading from "../../components/Loading/Loading";
+import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 
 const EditProfile = () => {
-  const dispacth = useDispatch();
+  const dispatch = useDispatch();
+
+  const resetMessageComponents = useResetComponentMessage(dispatch);
+
   const { user, message, error, loading } = useSelector((state) => state.user);
 
   // states
@@ -27,8 +31,8 @@ const EditProfile = () => {
 
   // load user date
   useEffect(() => {
-    dispacth(profile());
-  }, [dispacth]);
+    dispatch(profile());
+  }, [dispatch]);
 
   // Fill form with user data
 
@@ -45,15 +49,15 @@ const EditProfile = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // if (!name || name.length < 3) {
-    //   setErrors("O nome precisa ter no mínimo 3 caracteres.");
-    //   return;
-    // }
+    if (!name || name.length < 3) {
+      setErrors("O nome precisa ter no mínimo 3 caracteres.");
+      return;
+    }
 
-    // if (password && password.length < 6) {
-    //   setErrors("A senha deve ter no mínimo 6 caracteres.");
-    //   return;
-    // }
+    if (password && password.length < 6) {
+      setErrors("A senha deve ter no mínimo 6 caracteres.");
+      return;
+    }
 
     // Gether user data from states
     const userData = {
@@ -76,11 +80,13 @@ const EditProfile = () => {
 
     const formData = new FormData();
     Object.keys(userData).forEach((key) => formData.append(key, userData[key]));
-    dispacth(updateProfile(formData));
+    dispatch(updateProfile(formData));
 
     setTimeout(() => {
-      dispacth(resetMessage);
+      dispatch(resetMessage);
     }, 2000);
+
+    // resetMessageComponents();
   };
 
   const handleFile = (e) => {
