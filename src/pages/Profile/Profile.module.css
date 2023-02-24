@@ -89,6 +89,7 @@
 .photos__container {
     max-width: 100%;
     display: flex;
+    justify-content: space-between;
     column-gap: 0.5rem;
     row-gap: 0.5rem;
 
@@ -96,7 +97,7 @@
 }
 
 .photo {
-    width: 32%;
+    max-width: 30%;
 }
 
 .photo img {
@@ -138,4 +139,9 @@
     }
 }
 
+@media (max-width: 440px) {
+    .photo {
+        max-width: 45%;
+    }
+}
 
