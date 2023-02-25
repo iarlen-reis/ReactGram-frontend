@@ -24,6 +24,8 @@ const Header = () => {
   const { auth } = useAuth();
   const { user } = useSelector((state) => state.auth);
 
+  const [query, setQuery] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,13 +36,26 @@ const Header = () => {
     navigate("/login");
   };
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+
+    if (query) {
+      return navigate(`/search?q=${query}`);
+    }
+  };
+
   return (
     <aside className={styles.aside}>
       <nav className={styles.nav}>
         <Link to="/">ReactGram</Link>
-        <form className={styles.search__form}>
+        <form className={styles.search__form} onSubmit={handleSearch}>
           <BsSearch />
-          <input type="text" placeholder="Pesquisar" />
+          <input
+            type="text"
+            placeholder="Pesquisar"
+            onChange={({ target }) => setQuery(target.value)}
+            value={query || ""}
+          />
         </form>
         <ul className={styles.nav__links}>
           {auth ? (
