@@ -1,8 +1,8 @@
-export const api = "https://reactgram-server.iarlenreis.com.br/api";
+export const api = "https://hr79sy-5000.preview.csb.app/api";
 
 //https://www.reactgram-backend.iarlenreis.com.br
 
-export const upload = "https://reactgram-server.iarlenreis.com.br/uploads";
+export const upload = "https://hr79sy-5000.preview.csb.app/uploads";
 
 export const requestConfig = (method, data, token = null, image = null) => {
   let config;
